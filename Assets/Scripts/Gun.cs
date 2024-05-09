@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 // 총을 구현한다
@@ -18,6 +19,14 @@ public class Gun : MonoBehaviour
         Gun2,
         Gun3
     }
+    // SoundClip 만 받아오면 끝
+    private Dictionary<GunType, float> fireRates = new Dictionary<GunType, float>()
+    {
+        { GunType.Gun1, 0.5f }, // Gun1의 발사 속도
+        { GunType.Gun2, 0.9f },  // Gun2의 발사 속도
+        { GunType.Gun3, 0.12f }  // Gun3의 발사 속도
+    };
+
     public State state { get; private set; } // 현재 총의 상태
     public GameObject gun1;
     public GameObject gun2;
@@ -68,6 +77,7 @@ public class Gun : MonoBehaviour
                 currentGun = gun3;
                 break;
         }
+        timeBetFire = fireRates[gunType];
 
         currentGun.SetActive(true);
     }
@@ -78,7 +88,7 @@ public class Gun : MonoBehaviour
     
     private AudioSource gunAudioPlayer; // 총 소리 재생기
     public AudioClip shotClip; // 발사 소리
-    // Guntype 별 Audio 할당 필요
+    // Guntype 별 ㅁ
     public AudioClip reloadClip; // 재장전 소리
     
     public ParticleSystem muzzleFlashEffect; // 총구 화염 효과
